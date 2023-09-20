@@ -1,0 +1,28 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Project2 {
+  private static final String FILENAME = "input.txt"; // const string FILENAME with values from input.txt
+  public static void main(String[] args) {
+	  SortedRomanNumeralList sortedList = new SortedRomanNumeralList();
+	  UnsortedRomanNumeralList unsortedList = new UnsortedRomanNumeralList(); // create unsorted/sorted object
+	  try (BufferedReader reader = new BufferedReader(new FileReader(FILENAME))) { // reads from the file FILENAME
+		  String line; // holds each line read from file
+		  while ((line = reader.readLine())!= null) { // stops when no more lines are available
+			  String[] romanNumerals = line.split(" "); // splits lines into array of strings
+			  for (String romanNumeral : romanNumerals) { // iterates thru
+				  RomanNumeral roman = new RomanNumeral(romanNumeral);
+				  unsortedList.append(roman); // appends to unsorted
+				  sortedList.add(roman); // adds to sorted 
+			  }
+          }
+	  }
+	  catch (IOException e) { // catches to see if there is an error in the code 
+		  e.printStackTrace(); // gives extra details about the code error specificity
+		  System.exit(1); // Terminates program with exit status of 1 (meaning there is an error)
+      }
+	  RomanNumeralGUI gui = new RomanNumeralGUI(unsortedList, sortedList); 
+	  gui.createAndShowGUI(); // creates gui 
+  }
+}
